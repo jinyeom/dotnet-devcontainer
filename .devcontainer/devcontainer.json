@@ -1,0 +1,35 @@
+{
+    "name": "dotnet devcontainer",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "..",
+        "target": "dev",
+        "args": {
+            "VERSION": "6.0.201-focal-amd64",
+            "USERNAME": ""
+        }
+    },
+    // Forward SSH agent (host -> remote -> container)
+    // Make sure that the correct identity is added to ssh-agent (ssh-add -l)
+    "runArgs": [
+        "-v",
+        "${localEnv:SSH_AUTH_SOCK}:/tmp/ssh-agent.sock",
+        "-e",
+        "SSH_AUTH_SOCK=/tmp/ssh-agent.sock"
+    ],
+    // Uncomment below to connect as root
+    // "containerUser": "root",
+    "workspaceFolder": "", // containerWorkspaceFolder
+    "workspaceMount": "source=,target=${containerWorkspaceFolder},type=bind,consistency=cached",
+    "settings": {
+        "terminal.integrated.profiles.linux": {
+            "bash": {
+                "path": "/bin/bash"
+            }
+        },
+        "terminal.integrated.defaultProfile.linux": "bash"
+	},
+	"extensions": [
+		"ms-dotnettools.csharp"
+	]
+}
